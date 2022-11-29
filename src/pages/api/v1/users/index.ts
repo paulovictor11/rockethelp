@@ -1,6 +1,6 @@
+import prisma from "../../../../lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
-import prisma from "../../../../lib/prisma";
 import { UniqueEmailError } from "../../../../utils/errors/unique-email";
 import { Encrypter } from "../../../../utils/helpers/encrypter";
 
