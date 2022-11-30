@@ -12,7 +12,7 @@ export default async function handler(
     try {
         if (req.method === "PUT") {
             await putUser(id, req.body);
-            return res.status(201).send({});
+            return res.send({});
         }
 
         if (req.method === "DELETE") {
@@ -20,8 +20,8 @@ export default async function handler(
             return res.send({});
         }
 
-        const users = await getUser(id);
-        return res.json(users);
+        const user = await getUser(id);
+        return res.json(user);
     } catch (err: any) {
         return res.status(400).json({
             message: err.message ?? "Unexpected Error",

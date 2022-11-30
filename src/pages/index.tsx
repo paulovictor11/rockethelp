@@ -3,6 +3,7 @@ import { parseCookies } from "nookies";
 import { Button } from "../components/Button";
 import { Common } from "../components/Common";
 import { Divider } from "../components/Divider";
+import { EmptyList } from "../components/EmptyList";
 import { Tabs } from "../components/Tabs";
 
 export default function Home() {
@@ -35,7 +36,7 @@ export default function Home() {
                     />
                 </Tabs.List>
                 <Tabs.Content value="tab1">
-                    <span className="text-white">aaaaaa</span>
+                    <EmptyList />
                 </Tabs.Content>
                 <Tabs.Content value="tab2">
                     <span className="text-white">bbbbbbb</span>
