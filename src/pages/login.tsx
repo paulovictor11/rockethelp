@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { Button } from "../components/Button";
 import { Envelope, Key } from "phosphor-react";
 import { Toaster, toast } from "react-hot-toast";
-import { useSWRConfig } from "swr";
 import { api } from "../lib/axios";
 import { useState } from "react";
 import { setCookie } from "nookies";
@@ -27,14 +26,11 @@ interface iLoginResponse {
 
 export default function Login() {
     const router = useRouter();
-
     const [isLoading, setIsLoading] = useState(false);
-
-    const { mutate } = useSWRConfig();
     const { register, handleSubmit } = useForm<iLoginForm>();
 
-    const handleLogin = handleSubmit(async (data: iLoginForm) => {
-        if (!data.email && !data.password) {
+    const handleLogin = handleSubmit(async (formData: iLoginForm) => {
+        if (!formData.email && !formData.password) {
             toast.error("Por favor, preencha todos os campos!");
             return;
         }
@@ -42,20 +38,14 @@ export default function Login() {
         try {
             setIsLoading(true);
 
-            const response = await mutate<iLoginResponse>(
-                "/api/v1/login",
-                async () => {
-                    const { data: loginResponse } =
-                        await api.post<iLoginResponse>("/login", {
-                            email: data.email,
-                            password: data.password,
-                        });
+            const {
+                data: { token },
+            } = await api.post<iLoginResponse>("/login", {
+                email: formData.email,
+                password: formData.password,
+            });
 
-                    return loginResponse;
-                }
-            );
-
-            setCookie(null, "@help:token", response!.token, {
+            setCookie(null, "@help:token", token, {
                 maxAge: 5 * 24 * 60 * 60,
                 path: "/",
             });
