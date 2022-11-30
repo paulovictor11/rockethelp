@@ -1,0 +1,126 @@
+import logoVertical from "../assets/logo-vertical.svg";
+import Image from "next/image";
+import { FormField } from "../components/Form/FormField";
+import { useForm } from "react-hook-form";
+import { Button } from "../components/Button";
+import { Envelope, Key } from "phosphor-react";
+import { Toaster, toast } from "react-hot-toast";
+import { useSWRConfig } from "swr";
+import { api } from "../lib/axios";
+import { useState } from "react";
+import { setCookie } from "nookies";
+import { useRouter } from "next/router";
+
+interface iLoginForm {
+    email: string;
+    password: string;
+}
+
+interface iLoginResponse {
+    token: string;
+    user: {
+        id: string;
+        name: string;
+        email: string;
+    };
+}
+
+export default function Login() {
+    const router = useRouter();
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { mutate } = useSWRConfig();
+    const { register, handleSubmit } = useForm<iLoginForm>();
+
+    const handleLogin = handleSubmit(async (data: iLoginForm) => {
+        if (!data.email && !data.password) {
+            toast.error("Por favor, preencha todos os campos!");
+            return;
+        }
+
+        try {
+            setIsLoading(true);
+
+            const response = await mutate<iLoginResponse>(
+                "/api/v1/login",
+                async () => {
+                    const { data: loginResponse } =
+                        await api.post<iLoginResponse>("/login", {
+                            email: data.email,
+                            password: data.password,
+                        });
+
+                    return loginResponse;
+                }
+            );
+
+            setCookie(null, "@help:token", response!.token, {
+                maxAge: 5 * 24 * 60 * 60,
+                path: "/",
+            });
+
+            router.replace("/");
+        } catch (err: any) {
+            toast.error("Credenciais Inválidas");
+        } finally {
+            setIsLoading(false);
+        }
+    });
+
+    return (
+        <main className="h-screen bg-rocket-gray-600">
+            <Toaster />
+            <div className="max-w-md mx-auto pt-32">
+                <Image
+                    src={logoVertical}
+                    alt="Logo Vertical RocketHelp"
+                    className="mx-auto"
+                />
+
+                <h1 className="mt-20 font-bold text-xl text-center text-rocket-gray-100">
+                    Acesse sua conta
+                </h1>
+
+                <form
+                    onSubmit={handleLogin}
+                    className="mt-6 flex flex-col gap-4"
+                >
+                    <FormField.Root>
+                        <FormField.Input
+                            label="email"
+                            register={register}
+                            placeholder="E-mail"
+                            type="email"
+                            icon={
+                                <Envelope
+                                    size={20}
+                                    className="text-rocket-gray-300"
+                                />
+                            }
+                        />
+                    </FormField.Root>
+
+                    <FormField.Root>
+                        <FormField.Input
+                            label="password"
+                            register={register}
+                            placeholder="Senha"
+                            type="password"
+                            icon={
+                                <Key
+                                    size={20}
+                                    className="text-rocket-gray-300"
+                                />
+                            }
+                        />
+                    </FormField.Root>
+
+                    <Button type="submit" isLoading={isLoading}>
+                        Entrar
+                    </Button>
+                </form>
+            </div>
+        </main>
+    );
+}
