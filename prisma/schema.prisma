@@ -17,7 +17,8 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Call      Call[]
+
+  call Call[]
 
   @@map("users")
 }
@@ -32,7 +33,20 @@ model Call {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  owner User @relation(fields: [ownerId], references: [id])
+  owner    User      @relation(fields: [ownerId], references: [id])
+  solution Solution?
 
   @@map("calls")
+}
+
+model Solution {
+  id          String   @id @default(cuid())
+  description String
+  callId      String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  call Call @relation(fields: [callId], references: [id])
+
+  @@map("solutions")
 }

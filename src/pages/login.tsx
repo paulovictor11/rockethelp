@@ -39,13 +39,18 @@ export default function Login() {
             setIsLoading(true);
 
             const {
-                data: { token },
+                data: { token, user },
             } = await api.post<iLoginResponse>("/login", {
                 email: formData.email,
                 password: formData.password,
             });
 
             setCookie(null, "@help:token", token, {
+                maxAge: 5 * 24 * 60 * 60,
+                path: "/",
+            });
+
+            setCookie(null, "@help:user", JSON.stringify(user), {
                 maxAge: 5 * 24 * 60 * 60,
                 path: "/",
             });

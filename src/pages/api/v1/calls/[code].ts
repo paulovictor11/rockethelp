@@ -38,6 +38,7 @@ async function getCall(code: string) {
         where: { code },
         include: {
             owner: true,
+            solution: true,
         },
     });
 }
