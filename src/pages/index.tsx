@@ -1,12 +1,36 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { Button } from "../components/Button";
 import { Common } from "../components/Common";
 import { Divider } from "../components/Divider";
-import { EmptyList } from "../components/EmptyList";
 import { Tabs } from "../components/Tabs";
+import { CallList } from "../features/CallList";
+import { api } from "../lib/axios";
 
-export default function Home() {
+interface iCall {
+    id: string;
+    patrimony: string;
+    code: string;
+    status: string;
+    createdAt: string;
+}
+
+type HomeProps = {
+    calls: iCall[];
+};
+
+export default function Home(props: HomeProps) {
+    const router = useRouter();
+
+    function mountListByStatus(status: string): iCall[] {
+        if (!props.calls.length) {
+            return [] as iCall[];
+        }
+
+        return props.calls.filter((item) => item.status === status);
+    }
+
     return (
         <Common title="RocketHelp - Meus Chamados">
             <div className="flex items-center justify-between">
@@ -17,7 +41,12 @@ export default function Home() {
                     </span>
                 </span>
 
-                <Button>Nova solicitação</Button>
+                <Button
+                    color="green"
+                    onClick={() => router.push("/formulario")}
+                >
+                    Nova solicitação
+                </Button>
             </div>
 
             <Divider />
@@ -36,10 +65,10 @@ export default function Home() {
                     />
                 </Tabs.List>
                 <Tabs.Content value="tab1">
-                    <EmptyList />
+                    <CallList data={mountListByStatus("Em andamento")} />
                 </Tabs.Content>
                 <Tabs.Content value="tab2">
-                    <span className="text-white">bbbbbbb</span>
+                    <CallList data={mountListByStatus("Finalizado")} />
                 </Tabs.Content>
             </Tabs.Root>
         </Common>
@@ -49,7 +78,7 @@ export default function Home() {
 export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext
 ) => {
-    const { "@help:token": token } = parseCookies(context);
+    const { "@help:token": token, "@help:user": user } = parseCookies(context);
     if (!token) {
         return {
             redirect: {
@@ -59,7 +88,14 @@ export const getServerSideProps: GetServerSideProps = async (
         };
     }
 
+    const parsedUser = JSON.parse(user);
+    const callResponse = await api.get<iCall[]>(
+        `/calls/by-user/${parsedUser.id}`
+    );
+
     return {
-        props: {},
+        props: {
+            calls: callResponse.data,
+        },
     };
 };

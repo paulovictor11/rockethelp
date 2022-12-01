@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { z } from "zod";
 import prisma from "../../../../lib/prisma";
-import { MissingParamError } from "../../../../utils/errors/missing-param";
 
 export default async function handler(
     req: NextApiRequest,
@@ -10,10 +10,8 @@ export default async function handler(
         return res.status(405).json({ message: "Only PUT requests allowed" });
     }
 
-    const code = req.query.code as string;
-
     try {
-        await finishCall(code);
+        await finishCall(req.body);
         return res.send({});
     } catch (err: any) {
         return res.status(400).json({
@@ -22,13 +20,15 @@ export default async function handler(
     }
 }
 
-async function finishCall(code: string) {
-    if (!code) {
-        throw new MissingParamError("code");
-    }
+async function finishCall(requestBody: any) {
+    const createCallBody = z.object({
+        callId: z.string(),
+    });
+
+    const { callId } = createCallBody.parse(requestBody);
 
     await prisma.call.update({
-        where: { code },
+        where: { id: callId },
         data: {
             status: "Finalizado",
         },

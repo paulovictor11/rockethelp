@@ -21,7 +21,6 @@ export function Navbar() {
 
                 <ul className="flex items-center justify-between gap-6">
                     <NavLink label="Meus chamados" link="/" />
-                    <NavLink label="Outro link" link="/a" />
                 </ul>
 
                 <div className="flex items-center justify-between gap-2">

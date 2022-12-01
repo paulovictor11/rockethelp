@@ -1,11 +1,11 @@
-import logoVertical from "../assets/logo-vertical.svg";
+import logoVertical from "../../assets/logo-vertical.svg";
 import Image from "next/image";
-import { FormField } from "../components/Form/FormField";
+import { FormField } from "../../components/Form/FormField";
 import { useForm } from "react-hook-form";
-import { Button } from "../components/Button";
+import { Button } from "../../components/Button";
 import { Envelope, Key } from "phosphor-react";
 import { Toaster, toast } from "react-hot-toast";
-import { api } from "../lib/axios";
+import { api } from "../../lib/axios";
 import { useState } from "react";
 import { setCookie } from "nookies";
 import { useRouter } from "next/router";
@@ -40,10 +40,7 @@ export default function Login() {
 
             const {
                 data: { token, user },
-            } = await api.post<iLoginResponse>("/login", {
-                email: formData.email,
-                password: formData.password,
-            });
+            } = await api.post<iLoginResponse>("/login", formData);
 
             setCookie(null, "@help:token", token, {
                 maxAge: 5 * 24 * 60 * 60,
@@ -83,6 +80,7 @@ export default function Login() {
                 >
                     <FormField.Root>
                         <FormField.Input
+                            isPrimary
                             label="email"
                             register={register}
                             placeholder="E-mail"
@@ -98,6 +96,7 @@ export default function Login() {
 
                     <FormField.Root>
                         <FormField.Input
+                            isPrimary
                             label="password"
                             register={register}
                             placeholder="Senha"
@@ -111,7 +110,7 @@ export default function Login() {
                         />
                     </FormField.Root>
 
-                    <Button type="submit" isLoading={isLoading}>
+                    <Button color="green" type="submit" isLoading={isLoading}>
                         Entrar
                     </Button>
                 </form>

@@ -37,7 +37,13 @@ async function getCall(code: string) {
     return await prisma.call.findUnique({
         where: { code },
         include: {
-            owner: true,
+            owner: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                },
+            },
             solution: true,
         },
     });

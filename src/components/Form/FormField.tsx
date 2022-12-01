@@ -1,6 +1,6 @@
 import * as RadixLabel from "@radix-ui/react-label";
 import cx from "classnames";
-import { InputHTMLAttributes, ReactNode } from "react";
+import { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
 import { UseFormRegister } from "react-hook-form";
 
 type RootProps = {
@@ -22,7 +22,7 @@ function Label({ text, htmlForm }: LabelProps) {
     return (
         <RadixLabel.Root
             htmlFor={htmlForm}
-            className="font-semibold text-xl text-rocket-gray-100"
+            className="font-semibold text-sm text-rocket-gray-100"
         >
             {text}
         </RadixLabel.Root>
@@ -36,6 +36,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
     register: UseFormRegister<any>;
     required?: boolean;
     hasError?: boolean;
+    isPrimary?: boolean;
     icon?: ReactNode;
 };
 
@@ -44,15 +45,18 @@ function Input({
     register,
     required = false,
     hasError = false,
+    isPrimary = false,
     icon = null,
     ...rest
 }: InputProps) {
     return (
         <div
             className={cx(
-                "flex items-center gap-3 w-full h-12 py-3 px-4 rounded-lg bg-rocket-gray-700 focus-within:ring-2 focus-within:ring-rocket-green-500",
+                "flex items-center gap-3 w-full h-12 py-3 px-4 rounded-lg focus-within:ring-2 focus-within:ring-rocket-green-500",
                 {
                     "focus-within:ring-rocket-red-700": hasError,
+                    "bg-rocket-gray-700": isPrimary,
+                    "bg-rocket-gray-600": !isPrimary,
                 }
             )}
         >
@@ -69,6 +73,44 @@ function Input({
 }
 
 Input.displayName = "FormField.Input";
+
+type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
+    label: string;
+    register: UseFormRegister<any>;
+    required?: boolean;
+    hasError?: boolean;
+    isPrimary?: boolean;
+};
+
+function TextArea({
+    label,
+    register,
+    required = false,
+    hasError = false,
+    isPrimary = false,
+    ...rest
+}: TextAreaProps) {
+    return (
+        <div className="h-52 w-full">
+            <textarea
+                {...register(label, { required })}
+                {...rest}
+                id={label}
+                name={label}
+                className={cx(
+                    "w-full h-full flex-1 text-gray-100 outline-none text-base py-3 px-4 rounded-lg focus-within:ring-2 focus-within:ring-rocket-green-500 placeholder:text-base placeholder:text-rocket-gray-300",
+                    {
+                        "focus-within:ring-rocket-red-700": hasError,
+                        "bg-rocket-gray-700": isPrimary,
+                        "bg-rocket-gray-600": !isPrimary,
+                    }
+                )}
+            ></textarea>
+        </div>
+    );
+}
+
+TextArea.displayName = "FormField.TextArea";
 
 type MessageProps = {
     content: string;
@@ -88,5 +130,6 @@ export const FormField = {
     Root: Root,
     Label: Label,
     Input: Input,
+    TextArea: TextArea,
     Message: Message,
 };

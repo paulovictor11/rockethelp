@@ -25,7 +25,13 @@ export default async function handler(
 async function getCalls() {
     return await prisma.call.findMany({
         include: {
-            owner: true,
+            owner: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                },
+            },
         },
     });
 }

@@ -1,8 +1,6 @@
-import prisma from "../../../../lib/prisma";
-import { User } from "@prisma/client";
+import prisma from "../../../../../lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
-import { parseCookies } from "nookies";
-import { MissingParamError } from "../../../../utils/errors/missing-param";
+import { MissingParamError } from "../../../../../utils/errors/missing-param";
 
 export default async function handler(
     req: NextApiRequest,
@@ -12,11 +10,10 @@ export default async function handler(
         return res.status(405).json({ message: "Only GET requests allowed" });
     }
 
-    const { "@help:user": user } = parseCookies(null);
-    const parsedUser = JSON.parse(user) as User;
+    const id = req.query.id as string;
 
     try {
-        const calls = await getCallsByUser(parsedUser.id);
+        const calls = await getCallsByUser(id);
         return res.json(calls);
     } catch (err: any) {
         return res.status(400).json({
