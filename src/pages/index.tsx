@@ -35,8 +35,8 @@ export default function Home(props: HomeProps) {
         <Common title="RocketHelp - Meus Chamados">
             <div className="flex items-center justify-between">
                 <span className="font-bold text-xl text-rocket-gray-100">
-                    Solicitações:{" "}
-                    <span className="font-normal text-base text-rocket-gray-200">
+                    Solicitações em andamento:{" "}
+                    <span className="font-normal text-lg text-rocket-gray-200">
                         {mountListByStatus("Em andamento").length}
                     </span>
                 </span>
