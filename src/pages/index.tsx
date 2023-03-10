@@ -37,7 +37,7 @@ export default function Home(props: HomeProps) {
                 <span className="font-bold text-xl text-rocket-gray-100">
                     Solicitações:{" "}
                     <span className="font-normal text-base text-rocket-gray-200">
-                        0
+                        {mountListByStatus("Em andamento").length}
                     </span>
                 </span>
 

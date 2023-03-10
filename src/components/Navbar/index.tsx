@@ -1,10 +1,11 @@
 import logoHorizontal from "../../assets/logo-horizontal.svg";
 import Image from "next/image";
+import Link from "next/link";
 import { NavLink } from "../NavLink";
 import { useRouter } from "next/router";
 import { destroyCookie } from "nookies";
-import { Bell, SignOut } from "phosphor-react";
-import { Avatar } from "../Avatar";
+import { Bell, MagnifyingGlass, SignOut } from "phosphor-react";
+import { IconButton } from "../IconButton";
 
 export function Navbar() {
     const router = useRouter();
@@ -17,25 +18,28 @@ export function Navbar() {
     return (
         <nav className="h-[72px] bg-rocket-gray-600">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
-                <Image src={logoHorizontal} alt="Logo Horizontal RocketHelp" />
+                <Link href="/" className="h-[72px] flex items-center">
+                    <Image
+                        src={logoHorizontal}
+                        alt="Logo Horizontal RocketHelp"
+                    />
+                </Link>
 
                 <ul className="flex items-center justify-between gap-6">
                     <NavLink label="Meus chamados" link="/" />
+                    <NavLink label="Meu Perfil" link="/perfil" />
                 </ul>
 
                 <div className="flex items-center justify-between gap-2">
-                    <div className="h-9 w-9 rounded-lg flex items-center justify-center hover:bg-rocket-gray-400 hover:cursor-pointer">
+                    <IconButton title="Pesquisar">
+                        <MagnifyingGlass size={20} color="white" />
+                    </IconButton>
+                    <IconButton title="Notificações">
                         <Bell size={20} color="white" />
-                    </div>
-
-                    <div
-                        className="h-9 w-9 rounded-lg flex items-center justify-center hover:bg-rocket-gray-400 hover:cursor-pointer"
-                        onClick={handleLogout}
-                    >
+                    </IconButton>
+                    <IconButton title="Sair" onClick={handleLogout}>
                         <SignOut size={20} color="white" />
-                    </div>
-
-                    <Avatar />
+                    </IconButton>
                 </div>
             </div>
         </nav>

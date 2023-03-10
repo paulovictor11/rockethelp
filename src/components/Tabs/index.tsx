@@ -42,7 +42,7 @@ function TabTrigger(props: TabTriggerProps) {
         <RadixTabs.Trigger
             value={props.value}
             className={cx(
-                "rounded py-2 px-11 font-normal text-rocket-gray-300 text-xs bg-rocket-gray-600 uppercase",
+                "flex-1 rounded py-2 px-11 font-normal text-rocket-gray-300 text-xs bg-rocket-gray-600 uppercase",
                 {
                     "state-active:border state-active:border-rocket-orange-700 state-active:text-rocket-orange-700":
                         props.color == "orange",
