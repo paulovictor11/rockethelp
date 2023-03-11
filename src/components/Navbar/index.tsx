@@ -17,16 +17,18 @@ export function Navbar() {
     }
 
     return (
-        <nav className="h-[72px] bg-rocket-gray-600">
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
-                <ul className="flex items-center justify-between gap-6">
+        <nav className="h-[140px] bg-rocket-gray-600 lg:h-[72px]">
+            <div className="max-w-7xl mx-4 flex flex-col items-center justify-between lg:mx-8 xl:mx-auto lg:flex-row">
+                <div className="flex items-center justify-between gap-6">
                     <Image
                         src={logoHorizontal}
                         alt="Logo Horizontal RocketHelp"
                     />
-                    <NavLink label="Meus chamados" link="/" />
-                    <NavLink label="Meu Perfil" link="/perfil" />
-                </ul>
+                    <ul className="flex items-center justify-between gap-6">
+                        <NavLink label="Meus chamados" link="/" />
+                        <NavLink label="Meu Perfil" link="/perfil" />
+                    </ul>
+                </div>
 
                 <div className="flex items-center justify-between gap-2">
                     <SearchInput />

@@ -34,7 +34,7 @@ export default function Profile(props: ProfileProps) {
 
     return (
         <Common title="RocketHelp - Perfil">
-            <div className="grid grid-cols-3 gap-6 text-white">
+            <div className="grid grid-cols-1 gap-6 text-white lg:grid-cols-3">
                 <div>
                     <div className="bg-rocket-gray-600 p-6 rounded-md">
                         <div className="flex flex-col items-center gap-0 mt-2">
@@ -72,7 +72,7 @@ export default function Profile(props: ProfileProps) {
                     </div>
                 </div>
 
-                <div className="col-span-2 flex flex-col gap-6">
+                <div className="flex flex-col gap-6 lg:col-span-2">
                     <UpdateUser user={props.user} />
                     <ChangePassword userId={props.user.id} />
                 </div>

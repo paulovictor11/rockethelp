@@ -16,7 +16,9 @@ export function Common(props: CommonProps) {
             <main>
                 <Navbar />
 
-                <div className="max-w-7xl mx-auto my-10">{props.children}</div>
+                <div className="max-w-7xl mx-4 my-10 lg:mx-8 xl:mx-auto">
+                    {props.children}
+                </div>
             </main>
         </>
     );

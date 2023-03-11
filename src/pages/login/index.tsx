@@ -62,7 +62,7 @@ export default function Login() {
 
     return (
         <main className="h-screen bg-rocket-gray-600">
-            <div className="max-w-md mx-auto pt-32">
+            <div className="max-w-md mx-4 pt-32 sm:mx-auto">
                 <Image
                     src={logoVertical}
                     alt="Logo Vertical RocketHelp"
