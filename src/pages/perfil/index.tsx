@@ -3,9 +3,17 @@ import { parseCookies } from "nookies";
 import { Avatar } from "../../components/Avatar";
 import { Common } from "../../components/Common";
 import { Divider } from "../../components/Divider";
-import { Tabs } from "../../components/Tabs";
 import { ChangePassword } from "../../features/ChangePassword";
 import { UpdateUser } from "../../features/UpdateUser";
+import { api } from "../../lib/axios";
+
+interface iCall {
+    id: string;
+    patrimony: string;
+    code: string;
+    status: string;
+    createdAt: string;
+}
 
 interface iUser {
     id: string;
@@ -15,9 +23,15 @@ interface iUser {
 
 type ProfileProps = {
     user: iUser;
+    calls: iCall[];
 };
 
 export default function Profile(props: ProfileProps) {
+    function lengthByStatus(status: string): number {
+        const calls = props.calls.filter((item) => item.status === status);
+        return calls.length;
+    }
+
     return (
         <Common title="RocketHelp - Perfil">
             <div className="grid grid-cols-3 gap-6 text-white">
@@ -45,13 +59,13 @@ export default function Profile(props: ProfileProps) {
                             <li className="py-2 flex items-center justify-between">
                                 <span>Chamados Abertos</span>
                                 <span className="mt-1 bg-violet-100 text-violet-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-violet-400 border border-violet-400">
-                                    2
+                                    {lengthByStatus("Em andamento")}
                                 </span>
                             </li>
                             <li className="py-2 flex items-center justify-between">
                                 <span>Chamados Resolvidos</span>
                                 <span className="mt-1 bg-violet-100 text-violet-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-violet-400 border border-violet-400">
-                                    18
+                                    {lengthByStatus("Finalizado")}
                                 </span>
                             </li>
                         </ul>
@@ -81,10 +95,14 @@ export const getServerSideProps: GetServerSideProps = async (
     }
 
     const parsedUser: iUser = JSON.parse(user);
+    const callResponse = await api.get<iCall[]>(
+        `/calls/by-user/${parsedUser.id}`
+    );
 
     return {
         props: {
             user: parsedUser,
+            calls: callResponse.data,
         },
     };
 };
