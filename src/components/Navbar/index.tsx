@@ -11,6 +11,7 @@ export function Navbar() {
 
     function handleLogout() {
         destroyCookie(null, "@help:token");
+        destroyCookie(null, "@help:user");
         router.replace("/");
     }
 

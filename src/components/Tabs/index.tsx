@@ -34,7 +34,7 @@ TabList.displayName = "Tabs.List";
 type TabTriggerProps = {
     value: string;
     label: string;
-    color: "orange" | "green";
+    color: "orange" | "green" | "purple";
 };
 
 function TabTrigger(props: TabTriggerProps) {
@@ -48,6 +48,8 @@ function TabTrigger(props: TabTriggerProps) {
                         props.color == "orange",
                     "state-active:border state-active:border-rocket-green-700 state-active:text-rocket-green-700":
                         props.color == "green",
+                    "state-active:border state-active:border-rocket-purple-700 state-active:text-rocket-purple-700":
+                        props.color == "purple",
                 }
             )}
         >

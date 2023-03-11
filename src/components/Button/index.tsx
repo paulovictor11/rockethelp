@@ -27,11 +27,16 @@ export function Button({
                         color === "orange",
                     "bg-rocket-purple-700 hover:bg-rocket-green-500":
                         color === "purple",
+                    "cursor-not-allowed opacity-50 hover:bg-rocket-green-700":
+                        isLoading,
                 }
             )}
         >
             {isLoading ? (
-                <CircleNotch size={20} className="animate-spin" />
+                <>
+                    <CircleNotch size={20} className="animate-spin" />
+                    <span>Enviando...</span>
+                </>
             ) : (
                 children
             )}

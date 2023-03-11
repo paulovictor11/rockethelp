@@ -3,6 +3,7 @@ import { parseCookies } from "nookies";
 import { Avatar } from "../../components/Avatar";
 import { Common } from "../../components/Common";
 import { Divider } from "../../components/Divider";
+import { Tabs } from "../../components/Tabs";
 import { ChangePassword } from "../../features/ChangePassword";
 import { UpdateUser } from "../../features/UpdateUser";
 
@@ -58,6 +59,27 @@ export default function Profile(props: ProfileProps) {
                 </div>
 
                 <div className="col-span-2 flex flex-col gap-6">
+                    {/* <Tabs.Root defaultValue="tab1">
+                        <Tabs.List>
+                            <Tabs.Trigger
+                                value="tab1"
+                                label="Meus Dados"
+                                color="purple"
+                            />
+                            <Tabs.Trigger
+                                value="tab2"
+                                label="Trocar Senha"
+                                color="purple"
+                            />
+                        </Tabs.List>
+                        <Tabs.Content value="tab1">
+                            <UpdateUser />
+                        </Tabs.Content>
+                        <Tabs.Content value="tab2">
+                            <ChangePassword />
+                        </Tabs.Content>
+                    </Tabs.Root> */}
+
                     <UpdateUser />
                     <ChangePassword />
                 </div>

@@ -70,50 +70,56 @@ export default function Login() {
                     className="mx-auto"
                 />
 
-                <h1 className="mt-20 font-bold text-xl text-center text-rocket-gray-100">
-                    Acesse sua conta
-                </h1>
+                <div className="bg-rocket-gray-500 p-6 rounded-md mt-20 shadow-md">
+                    <h1 className="font-bold text-xl text-center text-rocket-gray-100">
+                        Acesse sua conta
+                    </h1>
 
-                <form
-                    onSubmit={handleLogin}
-                    className="mt-6 flex flex-col gap-4"
-                >
-                    <FormField.Root>
-                        <FormField.Input
-                            isPrimary
-                            label="email"
-                            register={register}
-                            placeholder="E-mail"
-                            type="email"
-                            icon={
-                                <Envelope
-                                    size={20}
-                                    className="text-rocket-gray-300"
-                                />
-                            }
-                        />
-                    </FormField.Root>
+                    <form
+                        onSubmit={handleLogin}
+                        className="mt-6 flex flex-col gap-4"
+                    >
+                        <FormField.Root>
+                            <FormField.Input
+                                isPrimary
+                                label="email"
+                                register={register}
+                                placeholder="E-mail"
+                                type="email"
+                                icon={
+                                    <Envelope
+                                        size={20}
+                                        className="text-rocket-gray-300"
+                                    />
+                                }
+                            />
+                        </FormField.Root>
 
-                    <FormField.Root>
-                        <FormField.Input
-                            isPrimary
-                            label="password"
-                            register={register}
-                            placeholder="Senha"
-                            type="password"
-                            icon={
-                                <Key
-                                    size={20}
-                                    className="text-rocket-gray-300"
-                                />
-                            }
-                        />
-                    </FormField.Root>
+                        <FormField.Root>
+                            <FormField.Input
+                                isPrimary
+                                label="password"
+                                register={register}
+                                placeholder="Senha"
+                                type="password"
+                                icon={
+                                    <Key
+                                        size={20}
+                                        className="text-rocket-gray-300"
+                                    />
+                                }
+                            />
+                        </FormField.Root>
 
-                    <Button color="green" type="submit" isLoading={isLoading}>
-                        Entrar
-                    </Button>
-                </form>
+                        <Button
+                            color="green"
+                            type="submit"
+                            isLoading={isLoading}
+                        >
+                            Entrar
+                        </Button>
+                    </form>
+                </div>
             </div>
         </main>
     );

@@ -22,7 +22,7 @@ export function NavLink(props: NavLinkProps) {
         >
             <li
                 className={cx(
-                    "font-normal text-base text-white group-hover:text-rocket-purple-700",
+                    "font-normal text-base text-white group-hover:text-rocket-green-500",
                     {
                         "text-rocket-purple-700 underline underline-offset-8":
                             router.pathname === props.link,
