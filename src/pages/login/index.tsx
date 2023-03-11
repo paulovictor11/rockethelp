@@ -62,7 +62,6 @@ export default function Login() {
 
     return (
         <main className="h-screen bg-rocket-gray-600">
-            <Toaster />
             <div className="max-w-md mx-auto pt-32">
                 <Image
                     src={logoVertical}

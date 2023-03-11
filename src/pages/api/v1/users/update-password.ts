@@ -15,10 +15,8 @@ export default async function handler(
         return res.status(405).json({ message: "Only PUT requests allowed" });
     }
 
-    const id = req.query.id as string;
-
     try {
-        await updatePassword(id, req.body);
+        await updatePassword(req.body);
         return res.send({});
     } catch (err: any) {
         return res.status(400).json({
@@ -27,7 +25,14 @@ export default async function handler(
     }
 }
 
-async function updatePassword(id: string, requestBody: any) {
+async function updatePassword(requestBody: any) {
+    const createUpdatePasswordBody = z.object({
+        id: z.string(),
+        password: z.string().min(8),
+    });
+
+    const { id, password } = createUpdatePasswordBody.parse(requestBody);
+
     if (!id) {
         throw new MissingParamError("id");
     }
@@ -40,11 +45,6 @@ async function updatePassword(id: string, requestBody: any) {
         throw new NotFoundError("user");
     }
 
-    const createUpdatePasswordBody = z.object({
-        password: z.string().min(8),
-    });
-
-    const { password } = createUpdatePasswordBody.parse(requestBody);
     const hashedPassword = await encrypter.encrypt(password);
 
     await prisma.user.update({

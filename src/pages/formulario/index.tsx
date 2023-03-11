@@ -55,8 +55,6 @@ export default function Form() {
 
     return (
         <Common title="RocketHelp - Novo Chamado">
-            <Toaster />
-
             <span className="font-bold text-xl text-rocket-gray-100">
                 Nova Solicitação
             </span>

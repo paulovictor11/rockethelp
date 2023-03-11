@@ -9,7 +9,7 @@ import {
 } from "phosphor-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Button } from "../../components/Button";
 import { CallBadge } from "../../components/CallBadge";
 import { CallDetailCard } from "../../components/CallDetailCard";
@@ -80,8 +80,6 @@ export default function Call(props: CallProps) {
 
     return (
         <Common title={`RocketHelp - Chamado #${props.call.code}`}>
-            <Toaster />
-
             <div className="flex items-center justify-between">
                 <span className="font-bold text-xl text-rocket-gray-100">
                     Solicitação:{" "}
