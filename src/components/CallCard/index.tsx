@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CircleWavyCheck, ClockAfternoon, Hourglass } from "phosphor-react";
 
 type CallCardProps = {
-    patrimony: string;
+    code: string;
     date: string;
     link: string;
     status: string;
@@ -23,8 +23,8 @@ export function CallCard(props: CallCardProps) {
             )}
         >
             <div>
-                <span className="font-bold text-base text-rocket-gray-100 mb-[2px]">
-                    Patrimônio {props.patrimony}
+                <span className="font-bold text-lg text-rocket-gray-100 mb-[2px]">
+                    Chamado #{props.code}
                 </span>
                 <span className="text-xs text-rocket-gray-200 flex items-center gap-1">
                     <ClockAfternoon

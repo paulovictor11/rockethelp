@@ -30,7 +30,7 @@ export function CallList(props: CallListProps) {
             {props.data.map((item) => (
                 <CallCard
                     key={item.id}
-                    patrimony={item.patrimony}
+                    code={item.code}
                     date={formatDate(item.createdAt)}
                     status={item.status}
                     link={`/chamado/${item.code}`}
