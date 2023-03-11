@@ -4,7 +4,7 @@ import { FormField } from "../../components/Form/FormField";
 import { useForm } from "react-hook-form";
 import { Button } from "../../components/Button";
 import { Envelope, Key } from "phosphor-react";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { api } from "../../lib/axios";
 import { useState } from "react";
 import { setCookie } from "nookies";
