@@ -38,6 +38,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
     hasError?: boolean;
     isPrimary?: boolean;
     icon?: ReactNode;
+    rightIcon?: ReactNode;
 };
 
 function Input({
@@ -47,6 +48,7 @@ function Input({
     hasError = false,
     isPrimary = false,
     icon = null,
+    rightIcon = null,
     ...rest
 }: InputProps) {
     return (
@@ -68,6 +70,7 @@ function Input({
                 name={label}
                 className="bg-transparent appearance-none flex-1 text-gray-100 outline-none text-base placeholder:text-base placeholder:text-rocket-gray-300"
             />
+            {rightIcon}
         </div>
     );
 }

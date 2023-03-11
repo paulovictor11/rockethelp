@@ -3,8 +3,9 @@ import Image from "next/image";
 import { NavLink } from "../NavLink";
 import { useRouter } from "next/router";
 import { destroyCookie } from "nookies";
-import { Bell, MagnifyingGlass, SignOut } from "phosphor-react";
+import { Bell, SignOut } from "phosphor-react";
 import { IconButton } from "../IconButton";
+import { SearchInput } from "../../features/SearchInput";
 
 export function Navbar() {
     const router = useRouter();
@@ -18,17 +19,17 @@ export function Navbar() {
     return (
         <nav className="h-[72px] bg-rocket-gray-600">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
-                <Image src={logoHorizontal} alt="Logo Horizontal RocketHelp" />
-
                 <ul className="flex items-center justify-between gap-6">
+                    <Image
+                        src={logoHorizontal}
+                        alt="Logo Horizontal RocketHelp"
+                    />
                     <NavLink label="Meus chamados" link="/" />
                     <NavLink label="Meu Perfil" link="/perfil" />
                 </ul>
 
                 <div className="flex items-center justify-between gap-2">
-                    <IconButton title="Pesquisar">
-                        <MagnifyingGlass size={20} color="white" />
-                    </IconButton>
+                    <SearchInput />
                     <IconButton title="Notificações">
                         <Bell size={20} color="white" />
                     </IconButton>
