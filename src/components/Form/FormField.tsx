@@ -116,12 +116,12 @@ function TextArea({
 TextArea.displayName = "FormField.TextArea";
 
 type MessageProps = {
-    content: string;
+    content?: string;
 };
 
 function Message(props: MessageProps) {
     return (
-        <span className="font-semibold text-sm text-rocket-red-700">
+        <span className="text-sm text-rocket-red-700 mt-1">
             {props.content}
         </span>
     );

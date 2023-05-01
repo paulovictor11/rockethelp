@@ -9,11 +9,8 @@ import { api } from "../../lib/axios";
 import { useState } from "react";
 import { setCookie } from "nookies";
 import { useRouter } from "next/router";
-
-interface iLoginForm {
-    email: string;
-    password: string;
-}
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface iLoginResponse {
     token: string;
@@ -24,17 +21,31 @@ interface iLoginResponse {
     };
 }
 
+const createLoginFormSchema = z.object({
+    email: z
+        .string()
+        .nonempty("O e-mail é obrigatório")
+        .email("Formato de e-mail inválido"),
+    password: z
+        .string()
+        .nonempty("A senha é obrigatória")
+        .min(8, "A senha precisa de no mínimo 6 caracteres"),
+});
+
+type CreateLoginFormData = z.infer<typeof createLoginFormSchema>;
+
 export default function Login() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const { register, handleSubmit } = useForm<iLoginForm>();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<CreateLoginFormData>({
+        resolver: zodResolver(createLoginFormSchema),
+    });
 
-    const handleLogin = handleSubmit(async (formData: iLoginForm) => {
-        if (!formData.email && !formData.password) {
-            toast.error("Por favor, preencha todos os campos!");
-            return;
-        }
-
+    const handleLogin = handleSubmit(async (formData: CreateLoginFormData) => {
         try {
             setIsLoading(true);
 
@@ -92,6 +103,11 @@ export default function Login() {
                                     />
                                 }
                             />
+                            {errors.email ? (
+                                <FormField.Message
+                                    content={errors.email.message}
+                                />
+                            ) : null}
                         </FormField.Root>
 
                         <FormField.Root>
@@ -108,6 +124,11 @@ export default function Login() {
                                     />
                                 }
                             />
+                            {errors.password ? (
+                                <FormField.Message
+                                    content={errors.password.message}
+                                />
+                            ) : null}
                         </FormField.Root>
 
                         <Button
