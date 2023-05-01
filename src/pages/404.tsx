@@ -17,7 +17,7 @@ export default function Custom404() {
                     404
                 </span>
                 <span className="font-semibold text-xl text-white">
-                    O chamado que você procura não foi encontrado!
+                    A página que você procura não foi encontrada!
                 </span>
 
                 <div className="mt-10">
