@@ -32,7 +32,10 @@ export function Navbar() {
 
                 <div className="flex items-center justify-between gap-2">
                     <SearchInput />
-                    <IconButton title="Notificações">
+                    <IconButton
+                        title="Notificações"
+                        onClick={() => router.push("/notificacoes")}
+                    >
                         <Bell size={20} color="white" />
                     </IconButton>
                     <IconButton title="Sair" onClick={handleLogout}>
